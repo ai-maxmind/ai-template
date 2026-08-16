@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultmessages='false' b:layoutsVersion='3' b:responsive='true' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+    <meta charset='utf-8'/>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes' name='viewport'/>
+    
+    <!-- Dynamic SEO Title -->
+    <b:if cond='data:view.isHomepage'>
+        <title>🚧 UNDER CONSTRUCTION - <data:blog.title/> - <data:blog.pageName/></title>
+    <b:else/>
+        <b:if cond='data:view.isPost or data:view.isPage'>
+            <title><data:blog.pageName/> - <data:blog.title/></title>
+        <b:else/>
+            <b:if cond='data:view.search.label'>
+                <title>Chủ đề: <data:view.search.label/> - <data:blog.title/></title>
+            <b:else/>
+                <b:if cond='data:view.search.query'>
+                    <title>Tìm kiếm: <data:view.search.query/> - <data:blog.title/></title>
+                <b:else/>
+                    <title><data:blog.pageTitle/></title>
+                </b:if>
+            </b:if>
+        </b:if>
+    </b:if>
+
+    <!-- Canonical URL -->
+    <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
+
+    <!-- Meta Description & SEO Meta Tags -->
+    <b:if cond='data:blog.metaDescription != ""'>
+        <meta expr:content='data:blog.metaDescription' name='description'/>
+    <b:else/>
+        <meta content='🚧 UNDER CONSTRUCTION - Bách khoa AI Thực chiến: Ứng dụng &amp; Vận hành Trí tuệ Nhân tạo. Nền tảng tri thức AI hiện đại, chuẩn SEO và tương tác 3D sinh động.' name='description'/>
+    </b:if>
+    <meta content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' name='robots'/>
+    <meta content='vietnamese' name='language'/>
+    <meta content='VN' name='geo.region'/>
+    <meta content='global' name='distribution'/>
+    <meta content='1 days' name='revisit-after'/>
+    <meta content='Bách khoa AI' name='author'/>
+
+    <!-- Social Media Meta Tags (Open Graph & Twitter Cards) -->
+    <meta expr:content='data:blog.pageTitle' property='og:title'/>
+    <b:if cond='data:view.isPost'>
+        <meta content='article' property='og:type'/>
+    <b:else/>
+        <meta content='website' property='og:type'/>
+    </b:if>
+    <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
+    <meta expr:content='data:blog.title' property='og:site_name'/>
+    <b:if cond='data:blog.postImageUrl'>
+        <meta expr:content='data:blog.postImageUrl' property='og:image'/>
+    <b:else/>
+        <meta content='https://lh3.googleusercontent.com/proxy/default-thumbnail.jpg' property='og:image'/>
+    </b:if>
+    <b:if cond='data:blog.metaDescription != ""'>
+        <meta expr:content='data:blog.metaDescription' property='og:description'/>
+    <b:else/>
+        <meta content='🚧 UNDER CONSTRUCTION - Bách khoa AI Thực chiến: Ứng dụng &amp; Vận hành Trí tuệ Nhân tạo.' property='og:description'/>
+    </b:if>
+
+    <meta content='summary_large_image' name='twitter:card'/>
+    <meta expr:content='data:blog.pageTitle' name='twitter:title'/>
+    <b:if cond='data:blog.metaDescription != ""'>
+        <meta expr:content='data:blog.metaDescription' name='twitter:description'/>
+    </b:if>
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com' rel='preconnect'/>
+    <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
+    <link href='https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Fira+Code:wght@400;500;600&amp;display=swap' rel='stylesheet'/>
+
+    <!-- Favicon -->
+    <link expr:href='data:blog.blogspotFaviconUrl' rel='icon' type='image/x-icon'/>
+
+    <!-- Schema.org JSON-LD Structured Data for SEO -->
+    <b:if cond='data:view.isHomepage'>
+        <script type='application/ld+json'>
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "<data:blog.title/>",
+          "url": "<data:blog.canonicalUrl/>",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "<data:blog.canonicalUrl/>search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+        </script>
+    </b:if>
+    <b:if cond='data:view.isPost'>
+        <script type='application/ld+json'>
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "<data:blog.canonicalUrl/>"
+          },
+          "headline": "<data:blog.pageName/>",
+          "description": "<data:blog.metaDescription/>",
+          "image": "<data:blog.postImageUrl/>",
+          "publisher": {
+            "@type": "Organization",
+            "name": "<data:blog.title/>"
+          }
+        }
+        </script>
+    </b:if>
+
+    <!-- Import Map for Three.js 3D Engine -->
+    <script type='importmap'>
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- Blogger Skin Stylesheet -->
+    <b:skin><![CDATA[
+        /* --- RESET & DESIGN SYSTEM TOKENS --- */
+        :root {
+            --bg-color: #030712;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --accent-cyan: #06b6d4;
+            --accent-magenta: #ec4899;
+            --accent-blue: #3b82f6;
+            --accent-pink: #f43f5e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --easy-bg: rgba(6, 182, 212, 0.1);
+            --easy-border: rgba(6, 182, 212, 0.3);
+            --nobel-bg: rgba(236, 72, 153, 0.1);
+            --nobel-border: rgba(236, 72, 153, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --shadow-glow: 0 10px 40px -10px rgba(6, 182, 212, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- 3D CANVAS BACKGROUND --- */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* --- LAYOUT OVERLAY --- */
+        .app-overlay {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .main-container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* --- HEADER & UNDER CONSTRUCTION HERO --- */
+        .construction-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            padding: 2.5rem 1.5rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .badge-construction {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1.25rem;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(245, 158, 11, 0.2));
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            color: #fbbf24;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 9999px;
+            margin-bottom: 1.25rem;
+            animation: pulse-glow 2s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.2); }
+            100% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.6); }
+        }
+
+        .construction-header h1 {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
+        }
+
+        .construction-header .subtitle {
+            font-size: 1.1rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        /* --- NAVBAR & BLOGGER HEADER WIDGET --- */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 1.5rem;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+        }
+
+        .nav-brand {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* --- KNOWLEDGE GRID & BLOG CARDS --- */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: var(--bg-card-hover);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-full {
+            grid-column: 1 / -1;
+        }
+
+        .card .emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .card h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.25rem;
+            line-height: 1.4;
+        }
+
+        .card h3 a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .card h3 a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* EASY SECTION (CHO TRẺ EM) */
+        .easy {
+            background: var(--easy-bg);
+            border-left: 4px solid var(--accent-cyan);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.98rem;
+            color: #e2e8f0;
+        }
+
+        /* NOBEL SECTION (CHUYÊN GIA / NÂNG CAO) */
+        .nobel {
+            background: var(--nobel-bg);
+            border-left: 4px solid var(--accent-magenta);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: 1.25rem;
+            font-size: 0.92rem;
+            color: #cbd5e1;
+        }
+
+        .nobel ul {
+            margin-left: 1.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .nobel li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* TAGS */
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.25rem;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        /* BLOG PAGER / PAGINATION */
+        .blog-pager {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            padding: 1rem;
+        }
+
+        .blog-pager-newer-link, .blog-pager-older-link {
+            padding: 0.75rem 1.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .blog-pager-newer-link:hover, .blog-pager-older-link:hover {
+            background: var(--accent-cyan);
+            color: #000000;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 4rem;
+        }
+
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 768px) {
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    ]]></b:skin>
+</head>
+<body>
+
+    <!-- 3D THREE.JS CANVAS CONTAINER -->
+    <div id='canvas-container'/>
+
+    <!-- APP OVERLAY -->
+    <div class='app-overlay'>
+        <div class='main-container'>
+
+            <!-- NAVBAR -->
+            <header class='nav-bar'>
+                <a class='nav-brand' href='/'>🧠 BÁCH KHOA AI THỰC CHIẾN</a>
+                <ul class='nav-links'>
+                    <li><a href='/'>Trang chủ</a></li>
+                    <li><a href='#knowledge-section'>Tri Thức AI</a></li>
+                    <li><a href='#about'>Giới thiệu</a></li>
+                </ul>
+            </header>
+
+            <!-- HERO & UNDER CONSTRUCTION HEADER -->
+            <section class='construction-header'>
+                <div class='badge-construction'>🚧 UNDER CONSTRUCTION - BLOG ĐANG PHÁT TRIỂN</div>
+                <h1>🧠 Bách khoa AI Thực chiến: Ứng dụng &amp; Vận hành</h1>
+                <div class='subtitle'>⚡ BIẾN PHỨC TẠP THÀNH ĐƠN GIẢN</div>
+            </section>
+
+            <!-- BLOGGER MAIN SECTION / WIDGET -->
+            <main id='main-content'>
+                <b:section class='main-section' id='main-content-section' showelement='yes'>
+                  <b:widget id='Blog1' locked='true' title='Bài viết trên Blog' type='Blog' version='2'>
+                    <b:includable id='main' var='top'>
+                      
+                      <!-- DYNAMIC BLOG POSTS STREAM -->
+                      <div class='blog-posts-stream'>
+                        <b:loop values='data:posts' var='post'>
+                          <article class='card card-full post-item' style='margin-bottom: 2rem;'>
+                            <h3 class='post-title'>
+                              <a expr:href='data:post.url'><data:post.title/></a>
+                            </h3>
+                            <div class='post-meta' style='color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;'>
+                              📅 <data:post.date/> | 👤 <data:post.author.name/>
+                            </div>
+                            <div class='post-body-snippet'>
+                              <b:if cond='data:view.isPost or data:view.isPage'>
+                                <data:post.body/>
+                              <b:else/>
+                                <b:if cond='data:post.snippet'>
+                                  <data:post.snippet/>
+                                <b:else/>
+                                  <data:post.body/>
+                                </b:if>
+                              </b:if>
+                            </div>
+                            <b:if cond='data:post.labels'>
+                              <div class='tag-group'>
+                                <b:loop values='data:post.labels' var='label'>
+                                  <a class='tag' expr:href='data:label.url' rel='tag'>#<data:label.name/></a>
+                                </b:loop>
+                              </div>
+                            </b:if>
+                          </article>
+                        </b:loop>
+                      </div>
+
+                      <!-- PAGINATION -->
+                      <b:include name='nextprev'/>
+
+                    </b:includable>
+
+                    <b:includable id='nextprev'>
+                      <div class='blog-pager' id='blog-pager'>
+                        <b:if cond='data:newerPageUrl'>
+                          <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' id='blog-pager-newer-link' title='Trang mới hơn'>&#8592; Trang trước</a>
+                        </b:if>
+                        <b:if cond='data:olderPageUrl'>
+                          <a class='blog-pager-older-link' expr:href='data:olderPageUrl' id='blog-pager-older-link' title='Trang cũ hơn'>Trang tiếp theo &#8594;</a>
+                        </b:if>
+                      </div>
+                    </b:includable>
+                  </b:widget>
+                </b:section>
+            </main>
+
+            <!-- FULL KNOWLEDGE GRID (TOÀN BỘ NỘI DUNG TỪ BRAIN.HTML) -->
+            <section id='knowledge-section'>
+                <h2 style='text-align: center; margin: 3rem 0 2rem; font-size: 2rem; color: var(--accent-cyan);'>
+                    📚 Bách Khoa Tri Thức AI (24 Chuyên Đề Cốt Lõi)
+                </h2>
+
+                <div class='knowledge-grid'>
+
+                    <!-- 1. Định nghĩa cốt lõi -->
+                    <div class='card card-full'>
+                        <span class='emoji'>🤖</span>
+                        <h3>1. AI LÀ GÌ?</h3>
+                        <div class='easy'>👶 AI là một <strong>cậu bé máy tính</strong> rất ngoan. Cậu ấy chưa biết gì, nhưng nếu cho cậu xem thật nhiều hình con mèo và nói "mèo", cậu tự nhận ra con mèo sau này. AI là cách máy móc <strong>học</strong> từ ví dụ để thông minh.</div>
+                        <div class='nobel'>📘 <strong>Góc học thuật:</strong> AI là ngành khoa học máy tính tạo ra các tác nhân thông minh có khả năng <span class='highlight'>cảm nhận, suy luận, học tập và hành động</span> để đạt mục tiêu. Nền tảng là <strong>học máy (ML)</strong>, <strong>học sâu (DL)</strong>, <strong>xử lý ngôn ngữ tự nhiên (NLP)</strong> và <strong>thị giác máy tính</strong>. Tầm nhìn hướng tới <strong>trí tuệ tổng quát (AGI)</strong> và <strong>siêu trí tuệ (ASI)</strong>.</div>
+                        <div class='tag-group'>
+                            <span class='tag'># Học từ dữ liệu</span>
+                            <span class='tag'># Tác nhân thông minh</span>
+                            <span class='tag'># Mô phỏng nhận thức</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Lịch sử -->
+                    <div class='card'>
+                        <span class='emoji'>📜</span>
+                        <h3>2. LỊCH SỬ AI – CÂU CHUYỆN CỦA MỘT CẬU BÉ MÁY TÍNH</h3>
+                        <div class='easy'>
+                            👶 <strong>Ngày xửa ngày xưa (năm 1956),</strong> các nhà khoa học tụ họp ở Dartmouth để bàn về ý tưởng: <em>"Liệu máy tính có thể suy nghĩ?"</em>. Ban đầu AI rất ngây ngô chỉ làm theo quy tắc. Nhưng đến 2012, <strong>AlexNet</strong> bùng nổ mở màn học sâu. Năm 2016 <strong>AlphaGo</strong> thắng cờ vây. Năm 2018 <strong>Transformer</strong> ra đời mở ra kỷ nguyên ChatGPT &amp; GenAI.
+                        </div>
+                        <div class='nobel'>
+                            📅 <strong>Các cột mốc vàng:</strong> 1956 (Dartmouth), 1966 (ELIZA), 1997 (Deep Blue), 2012 (AlexNet), 2016 (AlphaGo), 2018 (Transformer &amp; BERT). Sự chuyển mình từ <strong>Symbolic AI</strong> sang <strong>Connectionist AI</strong> nhờ 3 trụ cột: Dữ liệu lớn, GPU, Thuật toán.
+                        </div>
+                    </div>
+
+                    <!-- 3. Ba cấp độ AI -->
+                    <div class='card'>
+                        <span class='emoji'>📊</span>
+                        <h3>3. BA CẤP ĐỘ AI – HÀNH TRÌNH CỦA TRÍ TUỆ</h3>
+                        <div class='easy'>
+                            👶 <strong>1. ANI (AI hẹp):</strong> Chỉ giỏi MỘT việc (ChatGPT, Siri, xe tự lái).<br/>
+                            <strong>2. AGI (AI tổng quát):</strong> Thông minh bằng con người, làm mọi việc.<br/>
+                            <strong>3. ASI (Siêu AI):</strong> Vượt xa trí tuệ toàn nhân loại.
+                        </div>
+                        <div class='nobel'>
+                            🧠 <strong>Phân tích chuyên sâu:</strong> ANI hiện diện khắp nơi. AGI đòi hỏi đột phá về <span class='highlight'>suy luận nhân quả &amp; ngữ cảnh</span>. ASI đặt ra bài toán tối thượng về <span class='highlight'>Alignment</span> (Căn chỉnh giá trị với con người).
+                        </div>
+                    </div>
+
+                    <!-- 4. Học máy -->
+                    <div class='card'>
+                        <span class='emoji'>🧩</span>
+                        <h3>4. HỌC MÁY (ML) – CÂU CHUYỆN TỰ HỌC</h3>
+                        <div class='easy'>
+                            👶 Năm 1959, Arthur Samuel dạy máy chơi cờ checkers bằng cách tự học. Thay vì viết từng quy tắc, hãy cho máy <strong>hàng triệu ví dụ để nó tự tìm ra công thức toán học</strong>.
+                        </div>
+                        <div class='nobel'>
+                            📐 <strong>Nền tảng ML:</strong> Supervised, Unsupervised, Reinforcement, Semi-supervised &amp; Self-supervised Learning. Nền móng dựa trên Statistical Learning Theory và Tối ưu hóa lồi.
+                        </div>
+                    </div>
+
+                    <!-- 5. Học sâu -->
+                    <div class='card'>
+                        <span class='emoji'>🧠</span>
+                        <h3>5. HỌC SÂU (DL) – MẠNG NƠ-RON NHIỀU TẦNG</h3>
+                        <div class='easy'>
+                            👶 Khi xếp nhiều lớp nơ-ron chồng lên nhau, mạng có thể học các khái niệm cực kỳ phức tạp. Năm 2006 Geoffrey Hinton và 2012 AlexNet đã vượt qua hiện tượng <em>gradient biến mất</em> để tạo bùng nổ DL.
+                        </div>
+                        <div class='nobel'>
+                            ⚙️ <strong>Cấu trúc:</strong> Deep Neural Network (DNN) dùng <span class='highlight'>backpropagation</span> và gradient descent. Kỹ thuật ReLU, Batch Normalization &amp; ResNet giúp huấn luyện mạng hàng trăm tầng.
+                        </div>
+                    </div>
+
+                    <!-- 6. Mạng nơ-ron -->
+                    <div class='card'>
+                        <span class='emoji'>⚡</span>
+                        <h3>6. MẠNG NƠ-RON NHÂN TẠO (ANN)</h3>
+                        <div class='easy'>
+                            👶 Mô phỏng tế bào thần kinh não bộ: Nhận đầu vào, nhân với trọng số (weight), đi qua hàm kích hoạt để ra quyết định. Càng nhiều nơ-ron kết nối, máy càng thông minh.
+                        </div>
+                        <div class='nobel'>
+                            🧬 <strong>Thành phần:</strong> Inputs, Weights, Weighted Sum, Activation Function (ReLU, Sigmoid). Lan truyền ngược (Backpropagation) là chìa khóa điều chỉnh trọng số.
+                        </div>
+                    </div>
+
+                    <!-- 7. Dữ liệu -->
+                    <div class='card'>
+                        <span class='emoji'>🍎</span>
+                        <h3>7. DỮ LIỆU – THỨC ĂN KHÔNG THỂ THIẾU</h3>
+                        <div class='easy'>
+                            👶 Dữ liệu là đồ ăn cho AI. Muốn AI khỏe thì thức ăn phải <strong>SẠCH, ĐA DẠNG và CÂN BẰNG</strong>. "Rác vào thì rác ra" (Garbage in - Garbage out).
+                        </div>
+                        <div class='nobel'>
+                            📊 <strong>Định lý No Free Lunch:</strong> Không có thuật toán nào tốt cho mọi bài toán. Dữ liệu quyết định độ chính xác, tránh Overfitting / Underfitting và loại bỏ Bias.
+                        </div>
+                    </div>
+
+                    <!-- 8. Thuật toán -->
+                    <div class='card'>
+                        <span class='emoji'>📝</span>
+                        <h3>8. THUẬT TOÁN – CÔNG THỨC NẤU ĂN CỦA AI</h3>
+                        <div class='easy'>
+                            👶 Thuật toán là tập hợp chỉ dẫn từng bước biến dữ liệu thành kết quả. Tên gọi bắt nguồn từ nhà toán học Ả Rập Al-Khwarizmi 1000 năm trước.
+                        </div>
+                        <div class='nobel'>
+                            📐 <strong>Độ phức tạp Big-O:</strong> O(1), O(log n), O(n), O(n²). Các thuật toán kinh điển: Hồi quy tuyến tính, Cây quyết định, SVM, Neural Nets, Transformer.
+                        </div>
+                    </div>
+
+                    <!-- 9. Nhận diện ảnh -->
+                    <div class='card'>
+                        <span class='emoji'>🖼️</span>
+                        <h3>9. NHẬN BIẾT ẢNH – KHI AI BIẾT "NHÌN"</h3>
+                        <div class='easy'>
+                            👶 Ảnh là bảng số ma trận điểm ảnh (pixel). AI quét từng đường nét, hình khối rồi ghép lại thành vật thể nhờ Mạng Nơ-ron Tích chập (CNN).
+                        </div>
+                        <div class='nobel'>
+                            🔍 <strong>Cấu trúc CNN:</strong> Convolutional Layer (quét bộ lọc), Activation (ReLU), Pooling Layer (giảm kích thước), Fully-Connected Layer (phân loại). Bất biến với phép tịnh tiến.
+                        </div>
+                    </div>
+
+                    <!-- 10. Xử lý ngôn ngữ -->
+                    <div class='card'>
+                        <span class='emoji'>💬</span>
+                        <h3>10. HIỂU NGÔN NGỮ (NLP) &amp; TRANSFORMER</h3>
+                        <div class='easy'>
+                            👶 AI học ngôn ngữ bằng thống kê hàng tỷ văn bản. Đột phá năm 2017 với kiến trúc <strong>Transformer</strong> giúp AI "nhìn toàn câu" và hiểu ngữ cảnh sâu sắc (ChatGPT, Gemini).
+                        </div>
+                        <div class='nobel'>
+                            📖 <strong>Cơ chế Self-Attention:</strong> Tính toán mối quan hệ ngữ nghĩa giữa tất cả các từ trong chuỗi. Loại bỏ hạn chế khoảng cách xa của LSTM/RNN.
+                        </div>
+                    </div>
+
+                    <!-- 11. AI tạo sinh -->
+                    <div class='card'>
+                        <span class='emoji'>🎨</span>
+                        <h3>11. AI SÁNG TẠO (GENAI)</h3>
+                        <div class='easy'>
+                            👶 Không chỉ phân loại, GenAI học phân phối dữ liệu để tạo tác phẩm hoàn toàn mới: GAN (Cảnh sát &amp; Trộm) và Diffusion (Tạo ảnh từ đống nhiễu như Midjourney).
+                        </div>
+                        <div class='nobel'>
+                            🖌️ <strong>Kiến trúc:</strong> GAN (Minimax Game), Diffusion Models (DDPM, khử nhiễu từng bước với U-Net), Autoregressive LLMs (GPT, Gemini).
+                        </div>
+                    </div>
+
+                    <!-- 12. AI trong điện thoại -->
+                    <div class='card'>
+                        <span class='emoji'>📱</span>
+                        <h3>12. AI TRONG ĐIỆN THOẠI &amp; TINYML</h3>
+                        <div class='easy'>
+                            👶 Trợ lý Siri/Google, Face ID, gợi ý bàn phím, camera AI. Dùng <strong>Học liên kết (Federated Learning)</strong> để học ngay trên điện thoại mà không làm lộ bí mật cá nhân.
+                        </div>
+                        <div class='nobel'>
+                            📱 <strong>TinyML:</strong> Triển khai AI trên phần cứng hạn chế RAM/Pin. Federated Learning cho phép gửi cập nhật trọng số (gradient) thay vì gửi dữ liệu thô lên server.
+                        </div>
+                    </div>
+
+                    <!-- 13. Nhà thông minh -->
+                    <div class='card'>
+                        <span class='emoji'>🏠</span>
+                        <h3>13. NHÀ THÔNG MINH (SMART HOME &amp; IOT)</h3>
+                        <div class='easy'>
+                            👶 Kết nối đèn, điều hòa, robot lau nhà. Dùng <strong>Học tăng cường (Reinforcement Learning)</strong> để căn bằng giữa sự thoải mái và tiết kiệm tiền điện.
+                        </div>
+                        <div class='nobel'>
+                            🏠 <strong>Kiến trúc:</strong> IoT Protocol (MQTT, CoAP). RL (Q-Learning, DQN) tối ưu năng lượng dựa trên state, action và reward.
+                        </div>
+                    </div>
+
+                    <!-- 14. Xe tự lái -->
+                    <div class='card'>
+                        <span class='emoji'>🚗</span>
+                        <h3>14. XE TỰ LÁI – THỊ GIÁC &amp; RA QUYẾT ĐỊNH</h3>
+                        <div class='easy'>
+                            👶 Chiếc xe có "mắt" (Camera, Lidar, Radar), "não" (AI xử lý hàng triệu dữ liệu/giây) và "tay chân" (hệ thống lái) để di chuyển an toàn không cần tài xế.
+                        </div>
+                        <div class='nobel'>
+                            ⚡ <strong>Hệ thống 3 phần:</strong> Perception (Thị giác &amp; Lidar Point Cloud), Prediction &amp; Path Planning (A*, RRT, MPC), Control (PID, Deep RL). SAE Level 0-5.
+                        </div>
+                    </div>
+
+                    <!-- 15. Y tế -->
+                    <div class='card'>
+                        <span class='emoji'>🏥</span>
+                        <h3>15. AI TRONG Y TẾ &amp; ALPHAFOLD</h3>
+                        <div class='easy'>
+                            👶 Đọc phim X-quang/CT siêu chuẩn. Đặc biệt <strong>AlphaFold (2020)</strong> đã giải bài toán 50 năm về dự đoán cấu trúc 3D của Protein để chế tạo thuốc chữa bệnh nan y.
+                        </div>
+                        <div class='nobel'>
+                            🧬 <strong>Medical AI:</strong> CNN chẩn đoán hình ảnh (ResNet, U-Net). AlphaFold dùng Transformer và Self-supervised Learning dự đoán nếp gập protein.
+                        </div>
+                    </div>
+
+                    <!-- 16. Giáo dục -->
+                    <div class='card'>
+                        <span class='emoji'>📚</span>
+                        <h3>16. AI TRONG GIÁO DỤC (ADAPTIVE LEARNING)</h3>
+                        <div class='easy'>
+                            👶 Mỗi học sinh có một lộ trình học riêng phù hợp với năng lực cá nhân. AI đóng vai người thầy riêng kiên nhẫn và chấm bài tự động.
+                        </div>
+                        <div class='nobel'>
+                            📖 <strong>Thuật toán:</strong> Bayesian Knowledge Tracing (BKT), Deep Knowledge Tracing (DKT với LSTM), Item Response Theory (IRT).
+                        </div>
+                    </div>
+
+                    <!-- 17. Giải trí -->
+                    <div class='card'>
+                        <span class='emoji'>🎮</span>
+                        <h3>17. AI TRONG GIẢI TRÍ &amp; GỢI Ý</h3>
+                        <div class='easy'>
+                            👶 Netflix/Spotify đoán bộ phim &amp; bài hát bạn thích qua <strong>Lọc cộng tác</strong>. AI trong game (AlphaStar, OpenAI Five) thông minh như đối thủ thật.
+                        </div>
+                        <div class='nobel'>
+                            🎬 <strong>Recommender Systems:</strong> Collaborative Filtering, Matrix Factorization (SVD), Neural Collaborative Filtering, Deepfake VFX.
+                        </div>
+                    </div>
+
+                    <!-- 18. Nông nghiệp -->
+                    <div class='card'>
+                        <span class='emoji'>🌾</span>
+                        <h3>18. TRANG TRẠI THÔNG MINH (PRECISION AGRI)</h3>
+                        <div class='easy'>
+                            👶 Drone bay quét cánh đồng chỉ ra chỗ lá bị bệnh, tưới đúng gốc cây thiếu nước, robot hái quả chín mà không làm dập.
+                        </div>
+                        <div class='nobel'>
+                            🌱 <strong>Công nghệ:</strong> Chỉ số NDVI qua viễn thám đa phổ, CNN phát hiện bệnh cây trồng (PlantVillage), Robot thu hoạch với RL.
+                        </div>
+                    </div>
+
+                    <!-- 19. AI có cảm xúc? -->
+                    <div class='card'>
+                        <span class='emoji'>😢</span>
+                        <h3>19. AI CÓ CẢM XÚC? (AFFECTIVE COMPUTING)</h3>
+                        <div class='easy'>
+                            👶 AI chỉ là "diễn viên" bắt chước từ ngữ. Giống như máy tính mô phỏng cơn mưa nhưng máy tính không bao giờ bị <em>ướt</em>. AI không có cơ thể hay cảm xúc thật.
+                        </div>
+                        <div class='nobel'>
+                            🧠 <strong>Triết học tâm trí:</strong> Chinese Room Argument (John Searle), Turing Test. Affective Computing nhận diện nét mặt nhưng không có Qualia (ý thức nội tại).
+                        </div>
+                    </div>
+
+                    <!-- 20. Rủi ro & Đạo đức -->
+                    <div class='card'>
+                        <span class='emoji'>⚠️</span>
+                        <h3>20. RỦI RO, DEEPFAKE &amp; ĐẠO ĐỨC AI</h3>
+                        <div class='easy'>
+                            👶 AI là con dao sắc. Cần cẩn thận với tin giả (Deepfake), nguy cơ mất việc làm, và vũ khí tự động. Cần giải pháp XAI và bài toán Alignment.
+                        </div>
+                        <div class='nobel'>
+                            ⚖️ <strong>AI Safety:</strong> EU AI Act 2024, XAI (LIME, SHAP, Grad-CAM), Alignment Problem (RLHF, Safe RL, Nick Bostrom Paperclip maximizer).
+                        </div>
+                    </div>
+
+                    <!-- 21. Thiên kiến -->
+                    <div class='card'>
+                        <span class='emoji'>⚖️</span>
+                        <h3>21. THIÊN KIẾN (BIAS) VÀ CÔNG BẰNG AI</h3>
+                        <div class='easy'>
+                            👶 Nếu dữ liệu quá khứ không công bằng, AI sẽ học lại thói xấu đó (phân biệt giới tính, chủng tộc). Cần làm sạch dữ liệu để AI công bằng với mọi người.
+                        </div>
+                        <div class='nobel'>
+                            📊 <strong>Fairness Metrics:</strong> Demographic Parity, Equal Opportunity, Equalized Odds. Kỹ thuật Debiasing trong Pre/In/Post-processing.
+                        </div>
+                    </div>
+
+                    <!-- 22. Quyền riêng tư -->
+                    <div class='card'>
+                        <span class='emoji'>🔒</span>
+                        <h3>22. RIÊNG TƯ &amp; AN NINH (PRIVACY &amp; SECURITY)</h3>
+                        <div class='easy'>
+                            👶 Học liên kết (Federated Learning), Quyền riêng tư vi sai (Differential Privacy) giúp AI học thông tin mà không cần nhìn thấy bí mật của bạn.
+                        </div>
+                        <div class='nobel'>
+                            🛡️ <strong>Kỹ thuật:</strong> Differential Privacy (Thêm nhiễu Laplace/Gaussian), Homomorphic Encryption (Mã hóa đồng cấu FHE), Adversarial Attack Defense.
+                        </div>
+                    </div>
+
+                    <!-- 23. Việc làm -->
+                    <div class='card'>
+                        <span class='emoji'>💼</span>
+                        <h3>23. AI VÀ VIỆC LÀM – THÍCH NGHI &amp; TIẾN HÓA</h3>
+                        <div class='easy'>
+                            👶 Giống như máy hơi nước ngày xưa, AI thay thế tác vụ lặp đi lặp lại nhưng mở ra vô số ngành nghề mới (Kỹ sư AI, Data Scientist, UX Designer).
+                        </div>
+                        <div class='nobel'>
+                            📈 <strong>Dự báo WEF &amp; McKinsey:</strong> Reskilling &amp; Upskilling, Mô hình Human-in-the-loop, Thu nhập cơ bản Universal Basic Income (UBI).
+                        </div>
+                    </div>
+
+                    <!-- 24. Sáng tạo của AI -->
+                    <div class='card card-full'>
+                        <span class='emoji'>🎵</span>
+                        <h3>24. AI CÓ SÁNG TẠO? – HỌA SĨ VẼ NHƯNG KHÔNG BIẾT MƠ</h3>
+                        <div class='easy'>👶 AI ghép các mảnh Lego từ hàng triệu tác phẩm đã học để tạo ra tác phẩm mới. AI có sáng tạo thuật toán, nhưng thiếu "tia lửa linh hồn" và trải nghiệm sống của con người. Con người vẫn là người cầm cọ chỉ huy.</div>
+                        <div class='nobel'>📘 <strong>Computational Creativity:</strong> Boden model (Combinational, Exploratory, Transformational). AI vượt trội ở Fluency &amp; Flexibility nhưng Originality gắn liền với nhận thức con người.</div>
+                        <div class='tag-group'>
+                            <span class='tag'># Sáng tạo thuật toán</span>
+                            <span class='tag'># Trí tuệ tính toán</span>
+                            <span class='tag'># Con người làm chủ</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <footer>
+                <p>🚧 UNDER CONSTRUCTION - BÁCH KHOA AI THỰC CHIẾN &#169; 2026. All rights reserved.</p>
+                <p style='margin-top: 0.5rem; font-size: 0.8rem;'>Thiết kế chuẩn SEO &amp; Đồ họa 3D Three.js cho Blogger Theme Engine v3.</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- THREE.JS 3D CYBER-HUMAN ANIMATION ENGINE -->
+    <script type='module'>
+    //<![CDATA[
+        import * as THREE from 'three';
+
+        const container = document.getElementById('canvas-container');
+        if (container) {
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x030712, 0.015);
+
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 0, 45);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // Light sources
+            const ambientLight = new THREE.AmbientLight(0x06b6d4, 1.2);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xec4899, 2.5);
+            dirLight.position.set(20, 20, 20);
+            scene.add(dirLight);
+
+            const pointLight = new THREE.PointLight(0x3b82f6, 3, 100);
+            pointLight.position.set(-20, -10, 10);
+            scene.add(pointLight);
+
+            // 1. CYBER-HUMAN HEAD SILHOUETTE (Icosahedron / Head Form)
+            const headGeo = new THREE.IcosahedronGeometry(12, 4);
+            const headMat = new THREE.MeshStandardMaterial({
+                color: 0x030712,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.25,
+                roughness: 0.2,
+                metalness: 0.8
+            });
+            const headMesh = new THREE.Mesh(headGeo, headMat);
+            scene.add(headMesh);
+
+            // 2. NEURAL NETWORK POINTS & SYNAPSES
+            const particleCount = 700;
+            const particleGeo = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+
+            const colorCyan = new THREE.Color(0x06b6d4);
+            const colorPink = new THREE.Color(0xec4899);
+
+            for (let i = 0; i < particleCount; i++) {
+                const u = Math.random();
+                const v = Math.random();
+                const theta = u * 2.0 * Math.PI;
+                const phi = Math.acos(2.0 * v - 1.0);
+                const r = 9 + Math.random() * 3;
+
+                positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+                positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+                positions[i * 3 + 2] = r * Math.cos(phi);
+
+                const mixedColor = colorCyan.clone().lerp(colorPink, Math.random());
+                colors[i * 3] = mixedColor.r;
+                colors[i * 3 + 1] = mixedColor.g;
+                colors[i * 3 + 2] = mixedColor.b;
+            }
+
+            particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const particleMat = new THREE.PointsMaterial({
+                size: 0.6,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.85,
+                blending: THREE.AdditiveBlending
+            });
+            const particleSystem = new THREE.Points(particleGeo, particleMat);
+            scene.add(particleSystem);
+
+            // 3. INNER GLOWING BRAIN CORE
+            const coreGeo = new THREE.SphereGeometry(5, 32, 32);
+            const coreMat = new THREE.MeshBasicMaterial({
+                color: 0x06b6d4,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.4
+            });
+            const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+            scene.add(coreMesh);
+
+            // 4. HOLOGRAPHIC SCANNER RING
+            const ringGeo = new THREE.TorusGeometry(15, 0.15, 16, 100);
+            const ringMat = new THREE.MeshBasicMaterial({
+                color: 0xec4899,
+                transparent: true,
+                opacity: 0.6
+            });
+            const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+            ringMesh.rotation.x = Math.PI / 2;
+            scene.add(ringMesh);
+
+            // ANIMATION LOOP
+            let clock = new THREE.Clock();
+
+            function animate() {
+                requestAnimationFrame(animate);
+                const elapsedTime = clock.getElapsedTime();
+
+                // Slow rotation
+                headMesh.rotation.y = elapsedTime * 0.15;
+                particleSystem.rotation.y = elapsedTime * 0.18;
+                coreMesh.rotation.y = -elapsedTime * 0.25;
+                coreMesh.rotation.x = elapsedTime * 0.1;
+
+                // Pulsating core
+                const scale = 1 + Math.sin(elapsedTime * 2) * 0.08;
+                coreMesh.scale.set(scale, scale, scale);
+
+                // Holographic Scanner movement
+                ringMesh.position.y = Math.sin(elapsedTime * 1.5) * 10;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // RESIZE HANDLER
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+    //]]>
+    </script>
+</body>
+</html>
