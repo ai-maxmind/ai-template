@@ -1,7 +1,6 @@
 # 🚀 Hướng Dẫn Cài Đặt & Tối Ưu Template Blogger (Chuẩn SEO & Responsive)
 
-Tệp template Blogger XML chuẩn đã được khởi tạo thành công tại:
-`
+
 
 ## 🛠️ Các Bước Cài Đặt Lên Blogger
 
